@@ -87,35 +87,6 @@ int main(){
 			printf("(%d, %d)-> ",foundSlots[i].row, foundSlots[i].column);
 		}
 	}
-
-	printf("----------------------------------------------------\n");
-	printf("--------------    Slot Information    --------------\n");
-	printf("----------------------------------------------------\n");
-	int SizeofSlots;
-//?? Not working
-	printf("\n");
-		for(numofslots=0;numofslots >= 0 && numofslots <SizeofSlots; ++numofslots)
-		{
-			j = 1+rand()%3;//chooses random number between 1=3
-			if(j == 1)
-			{
-				strcpy(slots[numofslots].TypeofSlot,"Ground");// if 1, type = ground
-			}
-			if(j == 2)
-			{
-				strcpy(slots[numofslots].TypeofSlot,"City");	//if 2, type = city
-			}
-			if(j == 3)
-			{
-				strcpy(slots[numofslots].TypeofSlot,"Hill");//if 3, type = hill
-			}
-		}
-		for(i=0;i<SizeofSlots;i++)
-		{
-			printf("%d\t%s\n",i+1, slots[i].TypeofSlot);//prints slots
-		}
-
-
 // Asks the user to input a set of players (max 6).
 		printf("Please input  number of players 2-6");
 		scanf ("%d", &input);
