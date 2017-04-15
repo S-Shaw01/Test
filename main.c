@@ -1,4 +1,4 @@
-/*
+*
  * main.c
  */
 
@@ -11,6 +11,7 @@
 
 int main(){
 
+	setbuf(stdout,NULL);
 	int row, column;
 	struct slot* currSlot = NULL;
 	struct slot *foundSlots;
@@ -91,17 +92,7 @@ int main(){
 	printf("--------------    Slot Information    --------------\n");
 	printf("----------------------------------------------------\n");
 	int SizeofSlots;
-	do
-	{
-		printf("enter the number of slots you wish to use(Max of 20)\n");
-		scanf("%d",&SizeofSlots);
-		if(SizeofSlots<=0 || SizeofSlots >20)//number of slots
-		{
-			printf("\nMax number of slots is 20,please enter a valid number\n\n");
-		}
-	}
-	while(SizeofSlots<1 || SizeofSlots>20);
-
+//?? Not working
 	printf("\n");
 		for(numofslots=0;numofslots >= 0 && numofslots <SizeofSlots; ++numofslots)
 		{
@@ -125,41 +116,40 @@ int main(){
 		}
 
 
-		// Asks the user to input a set of players (max 6).
-			printf("Please input  number of players 2-6");
-			scanf ("%d", &input);
-			while (input <2 || input > 6)
+// Asks the user to input a set of players (max 6).
+		printf("Please input  number of players 2-6");
+		scanf ("%d", &input);
+		while (input <2 || input > 6)
 			{
 		   		printf("Input is invaid, Please input  number of players 2-6");
 		   		scanf ("%d", &input);
 			}
 
-			// Asks the user to input a name.
+		// Asks the user to input a name.
 				for (numplayers=0;numplayers >= 0 && numplayers < input; ++numplayers)
 			  	{
 					printf("Please input name for player %d", numplayers);
 					scanf("%s", &players[numplayers].name);
 			   	}
 
-				//life points are initially set to 100.
+		//life points are initially set to 100.
 				for (numplayers=0;numplayers >= 0 && numplayers <input; ++numplayers)
 				{
 					players[numplayers].life= 100;
 				}
 
-				SlotAssign(numplayers,SizeofSlots,players,slots);//assign players to slots
+				//??SlotAssign(numplayers,SizeofSlots,players,slots);//assign players to slots
 					for(i=0;i<numplayers;i++)
 					{//prints the slot each player is in
 					printf("=== SLOTS ===\nPlayer:%s\nPosition: %d\n",players[i].name, players[i].position + 1);
 					}
 					printf("\n");
 					printf("\n-----Begin-----\n");
-				// ** Subsequently the players are placed in a slot randomly.
-				// ** Note that, differently from the previous assignment, now more than one player can be assigned to a slot.
+					
 				// For each player the user has to select a type (Elf, Human, Ogre, Wizard)
 					for (numplayers=0;numplayers >= 0 && numplayers <input; ++numplayers)
 				 	{
-						printf("Please input choose a chartcter type for player %d :/n 1 Elf/n 2 Human/n 3 Ogre/n 4 Wizard/n ", numplayers);
+						printf("Please input choose a character type for player %d :/n 1 Elf/n 2 Human/n 3 Ogre/n 4 Wizard/n ", numplayers);
 						scanf ("%d", &inputtype);
 						while (inputtype <1 || inputtype > 4)
 						{
@@ -198,24 +188,34 @@ int main(){
 			if (players[numplayers].life >0)
 			{
 				printf("<%s>(<%s>, <%d>", players[numplayers].name,players[numplayers].type,players[numplayers].life);//moves players
-				printf("enter 1 to move, 2 to attack");
+				printf("enter 1 to move, 2 to attack, 3 to quit the game");
 				scanf("%d", &choice);
 
 				if(choice == 1)
 				{
-					printf("choice 1 to move forward\nChoice 2 to move backwards\n");
+					printf("choice 1 to move forward\nChoice 2 to move backwards\n, Choice 3 to move up \n, Choice 4 to move down\n");
 					scanf("%d",&choice2);
 
 					if(choice2 == 1)
 					{
-						players[i].position +=2;
+						// needs added
 					}
 					if(choice2 == 2)
 					{
-						players[i].position -= 1;
+					// needs added
 					}
 
-					if (slots[i].TypeofSlot== "Hill")//if player is on this slot, change stats
+					if(choice2 == 3)
+						{
+						// Needs added
+						}
+					if(choice2 == 4)
+						{
+						// needs added
+						}
+
+
+					if (strcmp(slots[i].TypeofSlot, "Hill")==0)//if player is on this slot, change stats
 					{
 						if(players[i].dexterity <  50)
 						{
@@ -236,7 +236,7 @@ int main(){
 						}
 					}
 
-					if(strcmp(slot[i].TypeofSlot, "City")==0)//if player is on this type, change stats
+					if(strcmp(slots[i].TypeofSlot, "City")==0)//if player is on this type, change stats
 					{
 						if(players[i].smartness > 60)
 						{
@@ -255,14 +255,31 @@ int main(){
 							}
 						}
 					}
-		//prints each players new location
-		printf("new location of %s = %d\n", players[i].name, players[i].position);
+		//prints each players new location ** needs changed
+		//printf("new location of %s = %d\n", players[i].name, players[i]);
 
 
 				}
 				if(choice == 2)
 				{
-					attack(players, numplayers, input);
+					printf("choice 1 for a near attack \n Choice 2 for a distant attack \n, Choice 3 for a magic attack \n");
+
+					if(choice2 == 1)
+					{
+					nearattack (players, numplayers, input);
+					}
+					if(choice2 == 2)
+					{
+						distantattack (players, numplayers, input);
+					}
+					if (choice2 == 3)
+					{
+						magicattack (players, numplayers, input);
+					}
+				}
+				if(choice == 3)
+				{
+					players[numplayers].life = 0;
 				}
 
 			}
@@ -274,15 +291,6 @@ int main(){
 			}
 		}
 	}
-	setbuf(stdout,NULL);
-	// **  creates a 7 x 7 squared board of slots. Each slot should have references to the adjacent slots.
-		//**Use linked lists to represent slots. Each slot should be identified by a row and a column number.
-		//**Each slot can have at least 2 up to 4 pointers to its adjacent slots.
-		//**Create 4 pointers upLeft, upRight, downLeft, downRight pointing respectively to the slots (1,1), (1,7), (7,1), and (7,7).
-
-		// **The type of each slot is selected randomly. The type of a slot could be: Level Ground, Hill or City.
-
-
 
 			// Prints the winner and losers
 		for (numplayers=0;numplayers >= 0 && numplayers < input; ++numplayers)
