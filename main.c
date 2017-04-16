@@ -112,8 +112,20 @@ int main(){
 				//??SlotAssign(numplayers,SizeofSlots,players,slots);//assign players to slots
 					for(i=0;i<numplayers;i++)
 					{//prints the slot each player is in
-					printf("=== SLOTS ===\nPlayer:%s\nPosition: %d\n",players[i].name, players[i].position + 1);
+					int k,n;
+					for(i=0;i<numplayers;i++)
+					{
+						k=rand()%boardsize;//assigns players to a random slot
+						n=rand()%boardsize;
+
+						players[i].positionrow = k;
+						players[i].positioncolumn = n;
 					}
+					for(i=0;i<numplayers;i++)
+					{
+						printf("player %s is in slot (%d, %d)\n", players[i].name,players[i].positionrow,players[i].positioncolumn);
+					}
+					
 					printf("\n");
 					printf("\n-----Begin-----\n");
 					
