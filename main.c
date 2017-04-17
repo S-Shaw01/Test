@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include "crossfireOperations.h"
 #include <time.h>
-#include "crossfireOperations.h"
+
 
 
 int main(){
