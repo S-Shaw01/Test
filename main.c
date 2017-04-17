@@ -4,7 +4,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "crossfireOperations.h"
 #include <time.h>
 #include "crossfireOperations.h"
 
@@ -109,13 +108,7 @@ int main(){
 					players[numplayers].life= 100;
 				}
 
-				//??SlotAssign(numplayers,SizeofSlots,players,slots);//assign players to slots
-					for(i=0;i<numplayers;i++)
-					{//prints the slot each player is in
-					printf("=== SLOTS ===\nPlayer:%s\nPosition: %d\n",players[i].name, players[i].position + 1);
-					}
-					printf("\n");
-					printf("\n-----Begin-----\n");
+		
 					
 				// For each player the user has to select a type (Elf, Human, Ogre, Wizard)
 					for (numplayers=0;numplayers >= 0 && numplayers <input; ++numplayers)
@@ -150,7 +143,23 @@ int main(){
 							showvalues(players, numplayers);
 							break;
 						}
-					}
+			}
+			int n,k;
+			for(i=0;i<numplayers;i++)
+		{
+			k=rand()%boardsize;//assigns a random number between 1 - 7 and assigns it to k
+			n=rand()%boardsize;//assigns a random number between 1 - 7 and assigns it to n
+
+			players[i].positionrow = k;//the value of k is assigned to positionrow of player[i]
+			players[i].positioncolumn = n;//the value of n is assigned to positioncolumn of player[i]
+		}
+		for(i=0;i<numplayers;i++)
+		{
+			printf("player %s is in slot (%d, %d)\n", players[i].name,players[i].positionrow,players[i].positioncolumn);//prints players positions
+		}
+		printf("\n");
+		
+	int rowChoice, columnChoice;
 	int choice,choice2;
 	while ( game != input)
 	{
@@ -158,32 +167,140 @@ int main(){
 		{
 			if (players[numplayers].life >0)
 			{
-				printf("<%s>(<%s>, <%d>", players[numplayers].name,players[numplayers].type,players[numplayers].life);//moves players
+				
+
+				for(numplayers=0;numplayers >= 0 && numplayers < input; ++numplayers)
+		{
+			if (players[numplayers].life >0)	
+			{
+				printf("you are in slot (%d, %d)\n", players[numplayers].positionrow,players[numplayers].positioncolumn);//moves players
 				printf("enter 1 to move, 2 to attack, 3 to quit the game");
 				scanf("%d", &choice);
 
 				if(choice == 1)
 				{
-					printf("choice 1 to move forward\nChoice 2 to move backwards\n, Choice 3 to move up \n, Choice 4 to move down\n");
-					scanf("%d",&choice2);
-
-					if(choice2 == 1)
-					{
-						// needs added
-					}
-					if(choice2 == 2)
-					{
-					// needs added
-					}
-
-					if(choice2 == 3)
+					
+					if(players[numplayers].positionrow == 1 && players[numplayers].positioncolumn == 1)// if in position (1,1) you can move to these places
 						{
-						// Needs added
+							printf("you can move to slot (1,2) or (2,1). enter your choice in the form x,y\n");
+							scanf("%d, %d", &rowChoice, &columnChoice);
+							if(rowChoice == 1 && columnChoice == 2)
+							{
+								players[numplayers].positionrow = 1;
+								players[numplayers].positioncolumn = 2;
+	
+							}
+							else if(rowChoice == 2 && columnChoice == 1)
+							{
+								players[numplayers].positionrow = 2;
+								players[numplayers].positioncolumn = 1;
+															
+							}
+							else
+							{
+								printf("invalid choice\n");
+								
+							}
 						}
-					if(choice2 == 4)
+					 else if(players[numplayers].positionrow == 1 && players[numplayers].positioncolumn == 7)//if in position (1,7), you can move to these places
 						{
-						// needs added
+							printf("you can move to slot (1,6) or (2,7).enter your choice in the form x,y\n");
+							scanf("%d, %d", &rowChoice, &columnChoice);
+							if(rowChoice == 1 && columnChoice == 6)
+							{
+								players[numplayers].positionrow = 1;
+								players[numplayers].positioncolumn = 6;
+								
+							}
+							else if(rowChoice == 2 && columnChoice == 7)
+							{
+								players[numplayers].positionrow = 2;
+								players[numplayers].positioncolumn = 7;
+								
+							}
+							else
+							{
+								printf("invalid choice\n");
+								
+							}
 						}
+						else if(players[numplayers].positionrow == 7 && players[numplayers].positioncolumn == 7)//if in position (7,7), you can move to these places
+						{
+							printf("you can moce to slot (7, 6) or (6, 7). enter your choice in the form x,y\n");
+							scanf("%d, %d", &rowChoice, &columnChoice);
+							if(rowChoice == 7 && columnChoice == 6)
+							{
+								players[numplayers].positionrow = 7;
+								players[numplayers].positioncolumn = 6;
+								
+							}
+							else if(rowChoice == 6 && columnChoice == 7)
+							{
+								players[numplayers].positionrow = 6;
+								players[numplayers].positioncolumn = 7;
+								
+							}
+							else
+							{
+								printf("invalid choice\n");
+								
+							}
+						}
+						else if(players[numplayers].positionrow == 7 && players[numplayers].positioncolumn == 1)//if in position (7,7), you can move to these places
+						{
+							printf("you can move to slot (6, 1) or (7, 2).enter your choice in the form x, y\n");
+							scanf("%d, %d", &rowChoice, &columnChoice);
+							
+							if(rowChoice == 6 && columnChoice == 1)
+							{
+								players[numplayers].positionrow = 6;
+								players[numplayers].positioncolumn = 1;
+									
+							}
+							else if(rowChoice == 7 && columnChoice == 2)
+							{
+								players[numplayers].positionrow = 7;
+								players[numplayers].positioncolumn = 2;
+								
+							}
+							else
+							{
+								printf("invalid choice\n");
+								
+							}
+						}
+						else//else it tells you which way up,down,left and right you can move
+						{
+							printf("you can move to slot (%d, %d), (%d, %d), (%d, %d) or (%d, %d).enter your choice in the form x, y\n",players[numplayers].positionrow + 1,players[numplayers].positioncolumn, players[numplayers].positionrow
+							,players[numplayers].positioncolumn + 1,players[numplayers].positionrow - 1,players[numplayers].positioncolumn, players[numplayers].positionrow, players[numplayers].positioncolumn - 1);
+							scanf("%d, %d", &rowChoice, &columnChoice);
+							if(rowChoice == players[numplayers].positionrow + 1 && columnChoice == players[numplayers].positioncolumn)
+							{
+								players[numplayers].positionrow =players[numplayers].positionrow + 1;
+								
+							}
+							else if(rowChoice == players[numplayers].positionrow && columnChoice == players[numplayers].positioncolumn + 1)
+							{
+								players[numplayers].positioncolumn = players[numplayers].positioncolumn + 1;
+								
+							}
+							else if(rowChoice == players[numplayers].positionrow - 1 && rowChoice == players[numplayers].positioncolumn)
+							{
+								players[numplayers].positionrow = players[numplayers].positionrow - 1;
+								
+							}
+							else if(rowChoice == players[numplayers].positionrow && columnChoice == players[numplayers].positioncolumn - 1)
+							{
+								players[numplayers].positioncolumn = players[numplayers].positioncolumn - 1;
+								
+							}
+							else
+							{
+								printf("invalid choice\n");
+								
+							}
+						}
+					
 
 
 					if (strcmp(slots[i].TypeofSlot, "Hill")==0)//if player is on this slot, change stats
